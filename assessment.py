@@ -298,10 +298,12 @@ def display_card_result(card, user_answer, correct):
     print(
         f"Pinyin: {', '.join(card.get('pinyin', []))}"
     )
-    print(
-        f"Frequency rank: "
-        f"{card['frequency']['rank']:,}"
-    )
+    rank = card.get("frequency", {}).get("rank")
+
+    if isinstance(rank, int):
+        print(f"Frequency rank: {rank:,}")
+    else:
+        print("Frequency rank: Unranked")
 
     frequency = card.get("frequency", {})
 
