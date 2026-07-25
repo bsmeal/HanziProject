@@ -4,6 +4,8 @@ import random
 import re
 import unicodedata
 
+from pronunciation import pinyin_to_zhuyin
+
 
 def load_cards(file_path):
     """
@@ -282,6 +284,26 @@ def record_answer(session, card, user_answer, correct, max_rank):
     )
 
 
+def get_zhuyin_readings(card):
+    """
+    Convert every pinyin reading on a card into tone-marked Zhuyin.
+
+    Duplicate readings are removed while preserving their order.
+    """
+    zhuyin_readings = []
+
+    for pronunciation in card.get("pinyin", []):
+        zhuyin = pinyin_to_zhuyin(
+            pronunciation,
+            include_tone=True,
+        )
+
+        if zhuyin and zhuyin not in zhuyin_readings:
+            zhuyin_readings.append(zhuyin)
+
+    return zhuyin_readings
+
+
 def display_card_result(card, user_answer, correct):
     """
     Display whether the user was correct, followed by all available
@@ -298,6 +320,14 @@ def display_card_result(card, user_answer, correct):
     print(
         f"Pinyin: {', '.join(card.get('pinyin', []))}"
     )
+
+    zhuyin_readings = get_zhuyin_readings(card)
+
+    if zhuyin_readings:
+        print(
+            f"Zhuyin: {', '.join(zhuyin_readings)}"
+        )
+
     rank = card.get("frequency", {}).get("rank")
 
     if isinstance(rank, int):

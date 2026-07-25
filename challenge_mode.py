@@ -2,10 +2,15 @@ import json
 import random
 from pathlib import Path
 
-from assessment import (
-    display_card_result,
-    grade_pinyin_answer,
+from assessment import display_card_result
+
+from input_helpers import (
+    ask_for_pronunciation,
+    choose_input_system,
+    display_input_instructions,
 )
+
+from pronunciation import grade_pronunciation_answer
 
 
 project_folder = Path(__file__).parent
@@ -49,24 +54,6 @@ def create_challenge_session():
         "correct_streak": 0,
         "incorrect_streak": 0,
     }
-
-
-def ask_for_pinyin():
-    """
-    Ask the user to enter tone-free pinyin.
-
-    Entering q ends the challenge session.
-    """
-    while True:
-        answer = input(
-            "Enter the pinyin without a tone number "
-            "(or q to quit): "
-        ).strip()
-
-        if answer:
-            return answer
-
-        print("Please enter a pinyin answer or q.")
 
 
 def choose_unranked_card(cards, used_characters):
@@ -178,15 +165,13 @@ def run_challenge_mode():
         return
 
     session = create_challenge_session()
+    input_system = choose_input_system()
 
     print("Unranked Character Challenge Mode")
     print("=" * 52)
-    print(
-        "Enter any valid pinyin pronunciation for the character."
-    )
-    print(
-        "Tone numbers and tone marks are ignored in this mode."
-    )
+
+    display_input_instructions(input_system)
+
     print(
         "These characters have no numerical frequency rank."
     )
@@ -230,14 +215,15 @@ def run_challenge_mode():
         print(f"                 {card['character']}")
         print()
 
-        user_answer = ask_for_pinyin()
+        user_answer = ask_for_pronunciation(input_system)
 
         if user_answer.lower() == "q":
             break
 
-        correct = grade_pinyin_answer(
-            card,
-            user_answer,
+        correct = grade_pronunciation_answer(
+            card=card,
+            user_answer=user_answer,
+            input_system=input_system,
         )
 
         record_challenge_answer(

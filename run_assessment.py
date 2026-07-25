@@ -7,32 +7,21 @@ from assessment import (
     display_session_summary,
     find_card_near_rank,
     get_ranked_cards,
-    grade_pinyin_answer,
     load_cards,
     record_answer,
 )
 
+from input_helpers import (
+    ask_for_pronunciation,
+    choose_input_system,
+    display_input_instructions,
+)
+
+from pronunciation import grade_pronunciation_answer
+
 
 project_folder = Path(__file__).parent
 cards_file = project_folder / "data" / "cards.json"
-
-
-def ask_for_pinyin():
-    """
-    Ask the user to enter tone-free pinyin.
-
-    Entering q ends the session.
-    """
-    while True:
-        answer = input(
-            "Enter the pinyin without a tone number "
-            "(or q to quit): "
-        ).strip()
-
-        if answer:
-            return answer
-
-        print("Please enter a pinyin answer or q.")
 
 
 def run_assessment():
@@ -50,14 +39,13 @@ def run_assessment():
 
     session = create_session()
 
+    input_system = choose_input_system()
+
     print("Taiwan Mandarin Character Recognition Mode")
     print("=" * 52)
-    print(
-        "Enter any valid pinyin pronunciation for the character."
-    )
-    print(
-        "Tone numbers and tone marks are ignored in this mode."
-    )
+
+    display_input_instructions(input_system)
+
     print(
         "The session continues until you enter q."
     )
@@ -104,14 +92,15 @@ def run_assessment():
         print(f"                 {card['character']}")
         print()
 
-        user_answer = ask_for_pinyin()
+        user_answer = ask_for_pronunciation(input_system)
 
         if user_answer.lower() == "q":
             break
 
-        correct = grade_pinyin_answer(
-            card,
-            user_answer,
+        correct = grade_pronunciation_answer(
+            card=card,
+            user_answer=user_answer,
+            input_system=input_system,
         )
 
         record_answer(
