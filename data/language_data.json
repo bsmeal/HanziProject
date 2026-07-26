@@ -1,0 +1,34 @@
+{
+  "愛": {
+    "vocabulary": [
+      {
+        "word": "愛情",
+        "pinyin": "ai4 qing2",
+        "zhuyin": "ㄞˋ ㄑㄧㄥˊ",
+        "meaning": "romantic love"
+      },
+      {
+        "word": "可愛",
+        "pinyin": "ke3 ai4",
+        "zhuyin": "ㄎㄜˇ ㄞˋ",
+        "meaning": "cute; lovable"
+      },
+      {
+        "word": "愛心",
+        "pinyin": "ai4 xin1",
+        "zhuyin": "ㄞˋ ㄒㄧㄣ",
+        "meaning": "compassion; a loving heart"
+      }
+    ],
+    "examples": [
+      {
+        "traditional": "她很愛自己的家人。",
+        "pinyin": "ta1 hen3 ai4 zi4 ji3 de5 jia1 ren2",
+        "zhuyin": "ㄊㄚ ㄏㄣˇ ㄞˋ ㄗˋ ㄐㄧˇ ˙ㄉㄜ ㄐㄧㄚ ㄖㄣˊ",
+        "english": "She loves her family very much.",
+        "target_word": "愛"
+      }
+    ],
+    "historical_citations": []
+  }
+}

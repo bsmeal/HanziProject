@@ -1,8 +1,6 @@
 import json
 import math
 import random
-import re
-import unicodedata
 
 from pronunciation import pinyin_to_zhuyin
 
@@ -56,68 +54,6 @@ def create_session():
         "incorrect_streak": 0,
         "last_answer_correct": None,
     }
-
-
-def normalize_pinyin(text):
-    """
-    Normalizes pinyin for tone-free recognition mode
-
-    Examples:
-        ai4     -> ai
-        ài      -> ai
-        XING2   -> xing
-        lu:4    -> lv
-        lü4     -> lv
-        lv4     -> lv
-
-    Tone numbers, tone marks, spaces, and punctuation are ignored
-    """
-    normalized = text.strip().lower()
-
-    # Normalizes the common ways of writing ü
-    normalized = normalized.replace("u:", "v")
-    normalized = normalized.replace("ü", "v")
-
-    # Separates accented letters from their tone marks
-    normalized = unicodedata.normalize("NFD", normalized)
-
-    # Removes accent marks
-    normalized = "".join(
-        character
-        for character in normalized
-        if unicodedata.category(character) != "Mn"
-    )
-
-    # Keeps only letters. This removes tone numbers and punctuation
-    normalized = re.sub(r"[^a-zv]", "", normalized)
-
-    return normalized
-
-
-def get_accepted_pinyin(card):
-    """
-    Returns the normalized set of accepted pronunciations for a card
-    """
-    accepted_answers = set()
-
-    for pronunciation in card.get("pinyin", []):
-        normalized = normalize_pinyin(pronunciation)
-
-        if normalized:
-            accepted_answers.add(normalized)
-
-    return accepted_answers
-
-
-def grade_pinyin_answer(card, user_answer):
-    """
-    Returns True when the user's tone-free pinyin matches any accepted
-    pronunciation for the character
-    """
-    normalized_answer = normalize_pinyin(user_answer)
-    accepted_answers = get_accepted_pinyin(card)
-
-    return normalized_answer in accepted_answers
 
 
 def update_estimate(session, tested_rank, correct, max_rank):
@@ -276,10 +212,10 @@ def record_answer(session, card, user_answer, correct, max_rank):
             "character": card["character"],
             "rank": rank,
             "user_answer": user_answer,
-            "normalized_answer": normalize_pinyin(user_answer),
-            "accepted_answers": sorted(get_accepted_pinyin(card)),
             "correct": correct,
-            "estimated_rank": round(session["estimated_rank"]),
+            "estimated_rank": round(
+                session["estimated_rank"]
+            ),
         }
     )
 
@@ -302,6 +238,155 @@ def get_zhuyin_readings(card):
             zhuyin_readings.append(zhuyin)
 
     return zhuyin_readings
+
+
+def display_vocabulary(card):
+    """
+    Display up to three vocabulary words containing the character.
+    """
+    vocabulary_entries = card.get(
+        "vocabulary",
+        [],
+    )
+
+    if not vocabulary_entries:
+        return
+
+    print("Vocabulary:")
+
+    for entry in vocabulary_entries[:3]:
+        word = entry.get("word", "")
+        pinyin = entry.get("pinyin", "")
+        zhuyin = entry.get("zhuyin", "")
+        meaning = entry.get("meaning", "")
+
+        pronunciation_parts = []
+
+        if pinyin:
+            pronunciation_parts.append(pinyin)
+
+        if zhuyin:
+            pronunciation_parts.append(zhuyin)
+
+        pronunciation_text = " | ".join(
+            pronunciation_parts
+        )
+
+        if pronunciation_text and meaning:
+            print(
+                f"  - {word} "
+                f"({pronunciation_text}): "
+                f"{meaning}"
+            )
+        elif pronunciation_text:
+            print(
+                f"  - {word} "
+                f"({pronunciation_text})"
+            )
+        elif meaning:
+            print(f"  - {word}: {meaning}")
+        else:
+            print(f"  - {word}")
+
+
+def display_examples(card):
+    """
+    Display the example sentences stored for a character.
+    """
+    examples = card.get("examples", [])
+
+    if not examples:
+        return
+
+    print("Examples:")
+
+    for example in examples:
+        traditional = example.get(
+            "traditional",
+            "",
+        )
+        pinyin = example.get(
+            "pinyin",
+            "",
+        )
+        zhuyin = example.get(
+            "zhuyin",
+            "",
+        )
+        english = example.get(
+            "english",
+            "",
+        )
+
+        if traditional:
+            print(f"  {traditional}")
+
+        if pinyin:
+            print(f"  Pinyin: {pinyin}")
+
+        if zhuyin:
+            print(f"  Zhuyin: {zhuyin}")
+
+        if english:
+            print(f"  English: {english}")
+
+
+def display_historical_citations(card):
+    """
+    Display historical citations for rare or historical characters.
+    """
+    citations = card.get(
+        "historical_citations",
+        [],
+    )
+
+    if not citations:
+        return
+
+    print("Historical citations:")
+
+    for citation in citations:
+        work = citation.get("work", "")
+        author = citation.get("author", "")
+        dynasty = citation.get("dynasty", "")
+        period = citation.get("period", "")
+        quotation = citation.get("quotation", "")
+        modern_form = citation.get(
+            "modern_form",
+            "",
+        )
+        note = citation.get("note", "")
+        source = citation.get("source", "")
+
+        heading_parts = [
+            part
+            for part in (
+                work,
+                author,
+                dynasty,
+                period,
+            )
+            if part
+        ]
+
+        if heading_parts:
+            print(
+                f"  - {' | '.join(heading_parts)}"
+            )
+
+        if quotation:
+            print(f"    Citation: {quotation}")
+
+        if modern_form:
+            print(
+                f"    Modern form: {modern_form}"
+            )
+
+        if note:
+            print(f"    Note: {note}")
+
+        if source:
+            print(f"    Source: {source}")
 
 
 def display_card_result(card, user_answer, correct):
@@ -357,6 +442,18 @@ def display_card_result(card, user_answer, correct):
 
     for meaning in card.get("meanings", []):
         print(f"  - {meaning}")
+
+    if card.get("vocabulary"):
+        print()
+        display_vocabulary(card)
+
+    if card.get("examples"):
+        print()
+        display_examples(card)
+
+    if card.get("historical_citations"):
+        print()
+        display_historical_citations(card)
 
     print("=" * 52)
 

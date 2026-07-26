@@ -8,21 +8,52 @@ from metadata import (
     add_frequency_data,
 )
 
+from language_data import (
+    add_language_data,
+    load_language_data,
+)
+
 
 project_folder = Path(__file__).parent
 
-data_file = project_folder / "data" / "cedict_ts.u8"
-output_file = project_folder / "data" / "cards.json"
-hsk_file = project_folder / "data" / "hsk.json"
-frequency_file = project_folder / "data" / "cuhk_taiwan_frequency.txt"
+data_file = (
+    project_folder
+    / "data"
+    / "cedict_ts.u8"
+)
+
+output_file = (
+    project_folder
+    / "data"
+    / "cards.json"
+)
+
+hsk_file = (
+    project_folder
+    / "data"
+    / "hsk.json"
+)
+
+frequency_file = (
+    project_folder
+    / "data"
+    / "cuhk_taiwan_frequency.txt"
+)
+
+language_data_file = (
+    project_folder
+    / "data"
+    / "language_data.json"
+)
+
 
 # Use a dictionary so every character has only one card.
 cards = {}
 
 print(f"Processing file: {data_file}")
 
-with open(data_file, encoding="utf-8") as f:
-    for line in f:
+with open(data_file, encoding="utf-8") as file:
+    for line in file:
         # Skip comments and empty lines.
         if line.startswith("#") or not line.strip():
             continue
@@ -35,19 +66,24 @@ with open(data_file, encoding="utf-8") as f:
         character = parts[0]
 
         # Only keep entries containing one Hanzi character.
-        if len(character) != 1 or not ("\u4e00" <= character <= "\u9fff"):
+        if (
+            len(character) != 1
+            or not ("\u4e00" <= character <= "\u9fff")
+        ):
             continue
 
         entry = line.strip()
 
-        # Extract Pinyin from [ ].
+        # Extract pinyin from [ ].
         pinyin_start = entry.find("[")
         pinyin_end = entry.find("]")
 
         if pinyin_start == -1 or pinyin_end == -1:
             continue
 
-        pinyin = entry[pinyin_start + 1:pinyin_end].strip()
+        pinyin = entry[
+            pinyin_start + 1:pinyin_end
+        ].strip()
 
         if not pinyin:
             continue
@@ -59,11 +95,17 @@ with open(data_file, encoding="utf-8") as f:
         if meaning_start == -1 or meaning_end == -1:
             continue
 
-        meaning_text = entry[meaning_start + 1:meaning_end]
+        meaning_text = entry[
+            meaning_start + 1:meaning_end
+        ]
 
         meanings = meaning_text.split("/")
-        meanings = [meaning.strip() for meaning in meanings]
-        meanings = [meaning for meaning in meanings if meaning]
+
+        meanings = [
+            meaning.strip()
+            for meaning in meanings
+            if meaning.strip()
+        ]
 
         filtered_meanings = []
 
@@ -78,31 +120,80 @@ with open(data_file, encoding="utf-8") as f:
                 "character": character,
                 "pinyin": [],
                 "meanings": [],
+                "vocabulary": [],
+                "examples": [],
+                "historical_citations": [],
             }
 
-        cards[character]["pinyin"].append(pinyin)
-        cards[character]["meanings"].extend(filtered_meanings)
+        cards[character]["pinyin"].append(
+            pinyin
+        )
+
+        cards[character]["meanings"].extend(
+            filtered_meanings
+        )
+
 
 print(f"Successfully parsed {len(cards)} cards.")
 
 # Convert the dictionary into a list for JSON.
 cards = list(cards.values())
 
+
 # Remove duplicate pronunciations and meanings.
 for card in cards:
-    card["pinyin"] = list(dict.fromkeys(card["pinyin"]))
-    card["meanings"] = list(dict.fromkeys(card["meanings"]))
+    card["pinyin"] = list(
+        dict.fromkeys(card["pinyin"])
+    )
+
+    card["meanings"] = list(
+        dict.fromkeys(card["meanings"])
+    )
+
 
 # Load and apply HSK metadata.
 # hsk_data = load_metadata(hsk_file)
 # cards = add_hsk_level(cards, hsk_data)
 
+
 # Load and apply Taiwanese frequency metadata.
-frequency_data = load_frequency_data(frequency_file)
-cards = add_frequency_data(cards, frequency_data)
+frequency_data = load_frequency_data(
+    frequency_file
+)
+
+cards = add_frequency_data(
+    cards,
+    frequency_data,
+)
+
+
+# Load and apply vocabulary, examples,
+# and historical citations.
+language_data = load_language_data(
+    language_data_file
+)
+
+cards = add_language_data(
+    cards,
+    language_data,
+)
+
 
 # Save the completed cards.
-with open(output_file, "w", encoding="utf-8") as f:
-    json.dump(cards, f, ensure_ascii=False, indent=4)
+with open(
+    output_file,
+    "w",
+    encoding="utf-8",
+) as file:
+    json.dump(
+        cards,
+        file,
+        ensure_ascii=False,
+        indent=4,
+    )
 
-print(f"Saved {len(cards)} cards to '{output_file}'")
+
+print(
+    f"Saved {len(cards)} cards "
+    f"to '{output_file}'"
+)

@@ -509,25 +509,34 @@ def grade_pronunciation_answer(
     user_answer,
     input_system,
 ):
+    """
+    Grade either a pinyin or Zhuyin answer.
+    """
     if input_system == "pinyin":
         normalized_answer = (
-            normalize_pinyin_without_tone(user_answer)
+            normalize_pinyin_without_tone(
+                user_answer,
+            )
         )
 
-        return (
-            normalized_answer
-            in get_accepted_pinyin_answers(card)
+        accepted_answers = (
+            get_accepted_pinyin_answers(card)
         )
+
+        return normalized_answer in accepted_answers
 
     if input_system == "zhuyin":
         normalized_answer = (
-            normalize_zhuyin_without_tone(user_answer)
+            normalize_zhuyin_without_tone(
+                user_answer,
+            )
         )
 
-        return (
-            normalized_answer
-            in get_accepted_zhuyin_answers(card)
+        accepted_answers = (
+            get_accepted_zhuyin_answers(card)
         )
+
+        return normalized_answer in accepted_answers
 
     raise ValueError(
         f"Unsupported input system: {input_system}"
