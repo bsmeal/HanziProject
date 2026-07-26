@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from assessment import (
+from core.assessment import (
     choose_next_rank,
     create_session,
     display_card_result,
@@ -11,13 +11,13 @@ from assessment import (
     record_answer,
 )
 
-from input_helpers import (
+from core.input_helpers import (
     ask_for_pronunciation,
     choose_input_system,
     display_input_instructions,
 )
 
-from pronunciation import grade_pronunciation_answer
+from core.pronunciation import grade_pronunciation_answer
 
 
 project_folder = Path(__file__).parent

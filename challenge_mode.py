@@ -2,15 +2,15 @@ import json
 import random
 from pathlib import Path
 
-from assessment import display_card_result
+from core.assessment import display_card_result
 
-from input_helpers import (
+from core.input_helpers import (
     ask_for_pronunciation,
     choose_input_system,
     display_input_instructions,
 )
 
-from pronunciation import grade_pronunciation_answer
+from core.pronunciation import grade_pronunciation_answer
 
 
 project_folder = Path(__file__).parent
