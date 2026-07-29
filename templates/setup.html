@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <div class="background_setup">
+
+    <div class="mode_box">
+
+      <p>
+        <u>Choose mode:</u>
+      </p>
+
+      <div class="mode_explanations_box">
+        <ul class="mode_explanations">
+          <li>Standard mode is ranked and tests your recognition of nearly 5000 of the most common characters</li>
+          <li>Challenge mode is unranked and contains many uncommon characters for those of you who
+            enjoy extensive reading, historical, or archaic variants of characters.</li>
+          <li>
+            Japanese mode will show Kanji as used in Japanese contexts.
+          </li>
+          <li>
+            Cantonese mode will show a mix of traditional and Hong Kong-specific characters.
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="choose_mode">
+        <div class="mode_option">
+          <input type="radio" id="standard" name="standard">
+          <label for="standard">Standard 常見</label>
+        </div>
+
+
+        <div class="mode_option">
+          <input type="radio" id="challenge" name="challenge">
+          <label for="challenge">Challenge 困難</label>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- To make radio button allow only one button to check, 
+     must add a value="" to the input, and a name that is the same for all related inputs. -->
+    <div class="choose_script_box">
+
+      <p>
+        <u>Choose script:</u>
+      </p>
+
+      <div class="script_option">
+        <input type="radio" id="traditional" name="script" value="traditional">
+        <label for="traditional">Traditional 繁體字</label>
+      </div>
+
+      <div class="script_option_unfinished">
+        <!-- Will uncomment the following when those modes are ready -->
+        <!-- <input type="radio" id="simplified" name="script" value="simplified"> -->
+        <label for="simplified">Simplified 简体字 (coming soon)</label>
+      </div>
+
+      <div class="script_option_unfinished">
+        <!-- <input type="radio" id="japanese" name="script" value="japanese"> -->
+        <label for="japanese">Japanese 漢字 (coming soon)</label>
+      </div>
+
+      <div class="script_option_unfinished">
+        <!-- <input type="radio" id="cantonese" name="script"> value="cantonese" -->
+        <label for="cantonese">Cantonese 粵語 (coming soon)</label>
+      </div>
+
+    </div>
+
+
+    <div class="input_box">
+      <p>
+        <u>Choose input method:</u>
+      </p>
+
+      <div class="choose_input">
+        <div class="input_option">
+          <input type="radio" id="zhuyin" name="input" value="zhuyin">
+          <label for="zhuyin">Zhuyin ㄅㄆㄇㄈ</label>
+        </div>
+
+        <div class="input_option">
+          <input type="radio" id="pinyin" name="input" value="pinyin">
+          <label for="pinyin">Pinyin 拼</label>
+        </div>
+
+        <div class="input_option_unfinished">
+          <!-- <input type="radio" id="kana" name="input" value="kana"> -->
+          <label for="kana">Kana 仮名 (coming soon)</label>
+        </div>
+
+      </div>
+    </div>
+
+    <br>
+    <div class="start_assessment_box">
+      <a class="start_assessment" href="/assessment">Start Assessment</a>
+    </div>
+  </div>
+</body>
+
+</html>

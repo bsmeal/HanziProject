@@ -1,7 +1,11 @@
 import os
 from pathlib import Path
 
-from flask import Flask, session
+from flask import (
+    Flask,
+    render_template,
+    session,
+)
 
 from core.assessment import (
     choose_next_rank,
@@ -26,11 +30,23 @@ ranked_cards = get_ranked_cards(cards)
 
 @app.route("/")
 def home():
-    return {
-        "message": "HanziProject Flask server is working.",
-        "card_count": len(cards),
-        "ranked_card_count": len(ranked_cards),
-    }
+    return render_template(
+        "index.html",
+    )
+
+
+@app.route("/setup")
+def setup():
+    return render_template(
+        "setup.html",
+    )
+
+
+@app.route("/assessment")
+def assessment():
+    return render_template(
+        "assessment.html",
+    )
 
 
 @app.route("/api/card/<int:target_rank>")

@@ -1,0 +1,121 @@
+.title {
+  text-align: center;
+}
+
+.summary {
+  text-align: center;
+}
+
+.get_started {
+  text-align: center;
+}
+
+.start_assessment {
+  color: blue;
+}
+
+.start_button {}
+
+.displayed_character {
+  text-align: center;
+  font-size: x-large;
+}
+
+/*setup.html styles start here*/
+
+.background_setup {
+  background-color: rgb(66, 66, 66);
+  color: white;
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.mode_explanations {
+  text-align: left;
+}
+
+.start_assessment {
+  color: gold;
+}
+
+.start_assessment_box {
+  margin: 10px;
+  background-color: crimson;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.script_option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+}
+
+.choose_script_box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/*Fixing here*/
+/*adjust the width as necessary for each box section*/
+.mode_box {}
+
+.choose_mode {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 1px;
+  align-items: center;
+}
+
+.mode_explanations_box {
+  border: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.mode_option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+}
+
+
+/*Below is unimportant right now*/
+
+.input_box {}
+
+.choose_input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.input_option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+}
+
+.script_option_unfinished {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 237px;
+}
+
+.input_option_unfinished {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 237px;
+}

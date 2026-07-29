@@ -11,3 +11,9 @@ Ctrl + C
 
 Install dependencies:
 py -m pip install -r requirements.txt
+
+Start virtual environment:
+.venv\Scripts\Activate.ps1
+
+Quickstart HTML:
+! + Tab
