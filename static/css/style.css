@@ -1,17 +1,48 @@
+body {
+  margin: 0;
+}
+
+.header {
+  background-color: rgb(142, 142, 245);
+  padding: 20px;
+  justify-content: space-between;
+  display: flex;
+}
+
+.settings-icon {
+  width: 2rem;
+  margin-left: 15px;
+}
+
+.home-and-assessment {
+  display: flex;
+  align-items: center;
+}
+
+.home {
+  margin-right: 15px;
+}
+
+.contact-and-settings {
+  display: flex;
+  align-items: center;
+}
+
+.contact-box {}
+
+.homepage {
+  text-align: center;
+  padding-bottom: 20px;
+  background-color: gray;
+}
+
 .title {
-  text-align: center;
+  margin-top: 0px;
+  padding-top: 20px;
 }
 
-.summary {
-  text-align: center;
-}
-
-.get_started {
-  text-align: center;
-}
-
-.start_assessment {
-  color: blue;
+.how-it-works-box {
+  line-height: 2;
 }
 
 .start_button {}
@@ -35,9 +66,7 @@
   text-align: left;
 }
 
-.start_assessment {
-  color: gold;
-}
+
 
 .start_assessment_box {
   margin: 10px;
@@ -118,4 +147,18 @@
   align-items: center;
   gap: 10px;
   width: 237px;
+}
+
+.choose-tones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.tones-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
 }

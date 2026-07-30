@@ -9,17 +9,75 @@
 </head>
 
 <body>
-  <div class="body">
+  <div class="header">
+    <div class="home-and-assessment">
+      <div class="home">
+        <a href="/">Home</a>
+      </div>
+      <div class="assessment">
+        <a href="/setup">Assessment</a>
+      </div>
+    </div>
+    <div class="contact-and-settings">
+
+      <div class="contact-box">
+        <a class="contact" href="/contact-page">Contact</a>
+      </div>
+      <div class="settings">
+        <a href="/settings-page">
+          <img class="settings-icon" src="static/images/settings.svg" alt="Settings icon">
+        </a>
+
+      </div>
+
+
+    </div>
+  </div>
+  <div class="homepage">
     <h1 class="title">
-      Welcome to Hanzi Project
+      Welcome to Hanzi Project(仮)!
     </h1>
     <h2 class="summary">
       The purpose of this program is to estimate how many Chinese characters you can recognize.<br>
     </h2>
+    <h3>
+      Questions adjust to your ability!
+    </h3>
     <p class="get_started">
-      When you're ready, please hit
       <a class="start_assessment" href="/setup">Start Assessment</a>
     </p>
+  </div>
+
+  <div class="how-it-works-box">
+    <div>
+      <ol> How it works:
+        <li>
+          First, choose whether you want to be tested on recognition of common Chinese characters,
+          or try challenge mode and see if you can recognize rarer characters.
+        </li>
+        <li>
+          Next, choose the script you want to be tested on. For the beta version,
+          traditional is the only script available. I will soon expand to include simplified, Japanese, and Cantonese
+          character testing.
+        </li>
+        <li>
+          Choose your preferred input method. Zhuyin (bopomofo) uses the Taiwanese typing method, while pinyin
+          uses the Latin alphabet, and kana uses Japanese hiragana and katakana. Kana will be added when the Japanese
+          version is complete.
+        </li>
+        <li>
+          Finally, choose whether you want to take your test to the next level and include the tone mark in your answer.
+          For example,
+          hao3 for pinyin or ㄏㄠˇ for zhuyin.
+        </li>
+        <li>
+          Start the assessment, and see as the adaptive difficulty will gradually show you less common characters,
+          asking you
+          to prove you know it by entering the correct pronunciation using one of the input methods mentioned
+          earlier, and the more you play, the more accurate your estimated character recognition number will be!
+        </li>
+      </ol>
+    </div>
   </div>
 
 </body>

@@ -49,6 +49,20 @@ def assessment():
     )
 
 
+@app.route("/contact-page")
+def contact():
+    return render_template(
+        "contact-page.html",
+    )
+
+
+@app.route("/settings-page")
+def settings():
+    return render_template(
+        "settings-page.html",
+    )
+
+
 @app.route("/api/card/<int:target_rank>")
 def get_card(target_rank):
     card = find_card_near_rank(
